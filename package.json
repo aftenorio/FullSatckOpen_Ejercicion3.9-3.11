@@ -1,0 +1,24 @@
+{
+  "name": "p3_a_ejercicios_3_1",
+  "version": "1.0.0",
+  "description": "Ejercicio Part3 - 3.1 a 3.6",
+  "license": "ISC",
+  "author": "Andres Tenorio",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd D:\\OneDrive\\Andres\\Cursos\\OpenFullStack\\part3\\p3_b_Ejercicio_3_9\\Render\\p2_d_Ejercicios_2_12 && npm run build && cp -r dist D:\\OneDrive\\Andres\\Cursos\\OpenFullStack\\part3\\p3_b_Ejercicio_3_9\\Render\\p3_a_Ejercicio_3_1",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
