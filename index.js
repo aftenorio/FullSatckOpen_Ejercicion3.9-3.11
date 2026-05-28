@@ -1,24 +1,26 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const path = require('path') // 1. IMPORTANTE: Requerir path para rutas absolutas
 
 const app = express()
+app.use(express.static('dist')) // Sirve el frontend desde la carpeta dist
 
-// Middlewares principales
+// 1. Middlewares principales.........
 app.use(cors())
 app.use(express.json())
 
-// Configuración de Morgan
+// 2. Configuración de Morgan
 morgan.token('body', (request) => {
   return JSON.stringify(request.body)
 })
 app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 )
+//app.use(morgan('tiny'))
 
-// 2. CORRECCIÓN: Servir frontend usando una ruta absoluta segura para Render
-app.use(express.static(path.join(__dirname, 'dist')))
+const generateId = () => {
+  return Math.floor(Math.random() * 1000000)
+}
 
 let persons = [
   { id: 1, name: "Arto Hellas", number: "040-123456" },
@@ -28,11 +30,15 @@ let persons = [
   { id: 5, name: "Andres Tenorio", number: "39-23-6423199" }
 ]
 
-const generateId = () => {
-  return Math.floor(Math.random() * 1000000)
-}
+// Cambia esto: para que funciones en Render
+//const PORT = 3001
 
-// Rutas de la API
+
+//app.listen(PORT, () => {
+//  console.log(`Server running on port ${PORT}`)
+//})
+
+// 3. Rutas de la API
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
@@ -59,19 +65,23 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
+
   persons = persons.filter(person => person.id !== id)
+
   response.status(204).end()
 })
 
+
 app.post('/api/persons', (request, response) => {
-  const body = request.body
+const body = request.body
 
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: 'name or number missing'
-    })
-  }
-
+// Validación: nombre o número faltante
+if (!body.name || !body.number) {
+  return response.status(400).json({
+    error: 'name or number missing'
+  })
+}
+// Validación: nombre duplicado
   const nameExists = persons.find(
     person => person.name === body.name
   )
@@ -81,7 +91,6 @@ app.post('/api/persons', (request, response) => {
       error: 'name must be unique'
     })
   }
-
   const newPerson = {
     id: generateId(),
     name: body.name,
@@ -89,13 +98,8 @@ app.post('/api/persons', (request, response) => {
   }
 
   persons = persons.concat(newPerson)
-  response.json(newPerson)
-})
 
-// 3. CORRECCIÓN: Manejar cualquier otra ruta devolviendo el index.html
-// Esto evita el 404 si recargas la página o usas React Router
-app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  response.json(newPerson)
 })
 
 const PORT = process.env.PORT || 3001
