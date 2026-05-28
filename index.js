@@ -1,29 +1,26 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 
 const app = express()
 
-app.use(express.static('dist'))
-
-const cors = require('cors')
+// 1. Middlewares principales
 app.use(cors())
 app.use(express.json())
+app.use(express.static('dist')) // Sirve el frontend desde la carpeta dist
 
+// 2. Configuración de Morgan
 morgan.token('body', (request) => {
   return JSON.stringify(request.body)
 })
-
 app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 )
-
 //app.use(morgan('tiny'))
-
 
 const generateId = () => {
   return Math.floor(Math.random() * 1000000)
 }
-
 
 let persons = [
   {
