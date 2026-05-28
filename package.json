@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "build": "npm run build --prefix frontend",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf dist && cd D:\\OneDrive\\Andres\\Cursos\\OpenFullStack\\part3\\p3_b_Ejercicio_3_9\\Render\\p2_d_Ejercicios_2_12 && npm run build && cp -r dist D:\\OneDrive\\Andres\\Cursos\\OpenFullStack\\part3\\p3_b_Ejercicio_3_9\\Render\\p3_a_Ejercicio_3_1",
