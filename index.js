@@ -23,43 +23,22 @@ const generateId = () => {
 }
 
 let persons = [
-  {
-    id: 1,
-    name: "Arto Hellas",
-    number: "040-123456"
-  },
-  {
-    id: 2,
-    name: "Ada Lovelace",
-    number: "39-44-5323523"
-  },
-  {
-    id: 3,
-    name: "Dan Abramov",
-    number: "12-43-234345"
-  },
-  {
-    id: 4,
-    name: "Mary Poppendieck",
-    number: "39-23-6423122"
-  }
-   ,
-  {
-    id: 5,
-    name: "Andres Tenorio",
-    number: "39-23-6423199"
-  }
+  { id: 1, name: "Arto Hellas", number: "040-123456" },
+  { id: 2, name: "Ada Lovelace", number: "39-44-5323523" },
+  { id: 3, name: "Dan Abramov", number: "12-43-234345" },
+  { id: 4, name: "Mary Poppendieck", number: "39-23-6423122" },
+  { id: 5, name: "Andres Tenorio", number: "39-23-6423199" }
 ]
+
 // Cambia esto: para que funciones en Render
 //const PORT = 3001
 
-// Por esto:
-const PORT = process.env.PORT || 3001
 
 //app.listen(PORT, () => {
 //  console.log(`Server running on port ${PORT}`)
 //})
 
+// 3. Rutas de la API
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
@@ -67,7 +46,6 @@ app.get('/api/persons', (request, response) => {
 app.get('/info', (request, response) => {
   const numberOfPersons = persons.length
   const date = new Date()
-
   response.send(
     `<p>Phonebook has info for ${numberOfPersons} people</p>
      <p>${date}</p>`
@@ -124,7 +102,7 @@ if (!body.name || !body.number) {
   response.json(newPerson)
 })
 
-
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
