@@ -4,7 +4,7 @@ const cors = require('cors')
 
 const app = express()
 
-// 1. Middlewares principales.
+// 1. Middlewares principales.........
 app.use(cors())
 app.use(express.json())
 app.use(express.static('dist')) // Sirve el frontend desde la carpeta dist
